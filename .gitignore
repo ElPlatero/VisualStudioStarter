@@ -1,0 +1,16 @@
+*.compileOptions
+*.dll
+*.exe
+*.DotSettings
+*.pdb
+*.zip
+*.log
+*.user
+bin/
+obj/
+obj-2008/
+.vs/
+.svn/
+nuget/
+*.suo
+*.useforbuildandremove
