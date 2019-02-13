@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
+using Serilog;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.FileProviders;
-using Serilog;
 
 namespace VisualStudioStarter
 {
@@ -28,7 +28,7 @@ namespace VisualStudioStarter
                     return;
                 }
 
-                args = new[] {$@".\{slnFile.Name}"};
+                args = new[] { $@".\{slnFile.Name}" };
             }
             else if (args.Length != 1)
             {
@@ -56,11 +56,11 @@ namespace VisualStudioStarter
                     CreateNoWindow = true
                 };
 
-                var processTemp = new Process {StartInfo = startInfo, EnableRaisingEvents = true};
+                var processTemp = new Process { StartInfo = startInfo, EnableRaisingEvents = true };
 
                 processTemp.Start();
             }
-            catch(InvalidOperationException ex)
+            catch (InvalidOperationException ex)
             {
                 logger.Warning(ex.Message);
             }
