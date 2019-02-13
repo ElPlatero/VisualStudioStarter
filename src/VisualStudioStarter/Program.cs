@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
 using Serilog;
 
 namespace VisualStudioStarter
@@ -17,9 +18,21 @@ namespace VisualStudioStarter
 
             var logger = new LoggerConfiguration().MinimumLevel.Debug().WriteTo.RollingFile(logFile).CreateLogger();
 
-            if (args == null || args.Length != 1)
+            if (args == null || args.Length < 1)
             {
-                logger.Warning("Keine, oder zu viele Parameter übergeben.");
+                var provider = new PhysicalFileProvider(Directory.GetCurrentDirectory());
+                var slnFile = provider.GetDirectoryContents(string.Empty).FirstOrDefault(p => StringComparer.InvariantCultureIgnoreCase.Equals(Path.GetExtension(p.Name), ".sln"));
+                if (slnFile == null)
+                {
+                    logger.Warning($@"Zu wenige Parameter übergeben, keine Projektmappe in ""{provider.Root}"" gefunden.");
+                    return;
+                }
+
+                args = new[] {$@".\{slnFile.Name}"};
+            }
+            else if (args.Length != 1)
+            {
+                logger.Warning("Zu viele Parameter übergeben.");
                 return;
             }
 

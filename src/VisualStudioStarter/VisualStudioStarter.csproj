@@ -11,6 +11,8 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <Authors>Tino Schüttpelz</Authors>
     <Version>2.2.0</Version>
+    <FileVersion>2.2.0.1</FileVersion>
+    <AssemblyVersion>2.2.0.1</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
