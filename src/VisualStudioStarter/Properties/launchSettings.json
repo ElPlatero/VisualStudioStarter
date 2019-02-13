@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "VisualStudioStarter": {
-      "commandName": "Project",
-      "commandLineArgs": "c:\\svnWork\\NET\\Sts.Vas.Online.WebServices.Core\\Sts.Vas.Online.WebServices.Core.sln"
-    }
-  }
-}
