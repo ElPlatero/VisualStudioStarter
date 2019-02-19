@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
 namespace VisualStudioStarter
@@ -26,12 +27,11 @@ namespace VisualStudioStarter
             if (versionLine == null) throw new InvalidOperationException("Studioversion nicht gefunden.");
 
             var formatVersion = formatVersionLine.Substring(VS_VERSION_INFOTEXT.Length);
-            var version = versionLine.Substring(VS_VERSION.Length);
+            var version = Regex.Match(versionLine, VS_VERSION + @"(Version ){0,1}(?<version>.*)").Groups["version"].Value;
 
             var runner = Runners.FirstOrDefault(p => StringComparer.CurrentCultureIgnoreCase.Equals(p.FormatVersion, formatVersion) && StringComparer.CurrentCultureIgnoreCase.Equals(p.VisualStudioString, version));
             if (runner == null) throw new InvalidOperationException($"Version nicht konfiguriert: {formatVersion} / VS {version}.");
             if (Studios.All(p => p.Ident != runner.Studio)) throw new InvalidOperationException($"Studio nicht konfiguriert: {runner.Studio}.");
-
 
             return Studios.First(p => p.Ident == runner.Studio).ExePath;
         }
